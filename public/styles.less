@@ -1,0 +1,36 @@
+body {
+    font-family: Lato;
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(14, 60px);
+        grid-row-gap: 65px;
+    }
+
+    .grid-item {
+        height: 250px;
+
+        .piece {
+            display: block;
+            margin: 3px auto 3px auto;
+        }
+    }
+
+    .off-board {
+        border: 1px solid black;
+    }
+
+    .bottom {
+        background-image: url(assets/top_point.png);
+        transform: rotate(180deg);
+    }
+
+    .top {
+        background-image: url(assets/top_point.png);
+    }
+
+    .piece {
+        width: 45px;
+        height: 45px;
+    }
+}
