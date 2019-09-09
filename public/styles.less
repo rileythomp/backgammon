@@ -4,7 +4,10 @@ body {
     .grid-container {
         display: grid;
         grid-template-columns: repeat(14, 60px);
-        grid-row-gap: 65px;
+        grid-row-gap: 79px;
+        width: 840px;
+        padding: 10px;
+        border: 5px solid black;
     }
 
     .grid-item {
@@ -18,6 +21,11 @@ body {
 
     .off-board {
         border: 1px solid black;
+        height: 245px;
+    }
+
+    #blue-jail, #red-bear {
+        margin-top: 5px;
     }
 
     .bottom {
@@ -32,5 +40,26 @@ body {
     .piece {
         width: 45px;
         height: 45px;
+    }
+
+    #blue-jail {
+        transform: rotate(180deg);
+    }
+
+    .dice {
+        height: 50px;
+        width: 50px;
+    }
+
+    #dice-display {
+        width: 870px;
+        margin-top: 10px;
+    }
+
+    #dice-wrapper {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 160px;
     }
 }
