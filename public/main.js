@@ -28,16 +28,33 @@ function drop(ev) {
 
     let end_point = ev.currentTarget;
 
-    end_num = Number(end_point.id.replace("point", ""));
+    if (end_point.classList.contains("bear")) {
+        end_num = (turn ? 0 : 25);
+    }
+    else {
+        end_num = Number(end_point.id.replace("point", ""));
+    }
 
     move_size = abs(start_num - end_num);
 
-    if (rolls.includes(move_size) && correct_direction()) {
-        console.log("good direction and size");
+    if (!rolls.includes(move_size) && correct_direction()) {
+        return
     }
-    else {
-        console.log("wrong direction or size")
-        return;
+
+    // bearing off
+    if (end_num % 25 == 0) {
+        // validate that all pieces are in home
+        let colour = turnMap[turn];
+        let home_points = document.getElementsByClassName(colour + "-home");
+        let pieces_home = 0;
+        for (let i = 0; i < home_points.length; ++i) {
+            let point = home_points[i];
+            pieces_home += point.querySelectorAll('.' + colour).length;
+
+        }
+        if (pieces_home != 15) {
+            return;
+        }
     }
 
     if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {

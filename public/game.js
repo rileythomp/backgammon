@@ -72,6 +72,7 @@ function move_piece(ev) {
     let data = ev.dataTransfer.getData("text");
     let piece = document.getElementById(data);
 
+    // dropped on same point piece started on
     if (target.id == piece.parentElement.id) {
         return;
     }
