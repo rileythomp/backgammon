@@ -30,6 +30,38 @@ function update_turn() {
     }
 }
 
+function point_has_different_piece(end_point) {
+    return !end_point.firstElementChild.classList.contains(turnMap[turn]);
+}
+
+function point_has_same_piece(end_point) {
+    return end_point.firstElementChild.classList.contains(turnMap[turn]);
+}
+
+function pieces_on_point(end_point) {
+    return end_point.childElementCount;
+}
+
+function correct_direction() {
+    return start_num > end_num && turn || start_num < end_num && !turn;
+}
+
+
+function no_moves_left() {
+    // if you have pieces in jail
+    if (document.getElementById(turnMap[turn] + "-jail").children.length > 0) {
+        for (let i = 0; i < rolls.length; ++i) {
+            let roll = rolls[i];
+            let end_point = document.getElementById("point" + (turn ? 25 - roll : roll));
+            if (pieces_on_point(end_point) < 2 || point_has_same_piece(end_point)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
 function move_piece(ev) {
     let target = ev.target;
     
@@ -47,27 +79,9 @@ function move_piece(ev) {
     target.appendChild(piece);
 
     rolls.remove(move_size);
-    console.log("rolls after move ", rolls);
 
-    if (rolls.length == 0) {
+    if (rolls.length == 0 || no_moves_left()) {
         update_turn();
     }
 }
-
-function point_has_different_piece(end_point) {
-    return !end_point.firstElementChild.classList.contains(turnMap[turn]);
-}
-
-function point_has_same_piece(end_point) {
-    return end_point.firstElementChild.classList.contains(turnMap[turn]);
-}
-
-function pieces_on_point(end_point) {
-    return end_point.childElementCount;
-}
-
-function correct_direction() {
-    return start_num > end_num && turn || start_num < end_num && !turn;
-}
-
 

@@ -3,6 +3,20 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+    // there are pieces in jail
+    if (document.getElementById(turnMap[turn] + "-jail").children.length > 0) {
+        if (!ev.currentTarget.parentElement.classList.contains("jail")) {
+            // invalid move
+            return;
+        }
+        else if (ev.currentTarget.classList.contains(turnMap[turn])) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            start_num = (turn ? 25 : 0);
+            return;
+        }
+    }
+
+    // checks you are moving the correct colour
     if (ev.currentTarget.classList.contains(turnMap[turn])) {
         ev.dataTransfer.setData("text", ev.target.id);
         start_num = Number(ev.currentTarget.parentElement.id.replace("point", ""));
@@ -80,6 +94,11 @@ function roll(ev) {
 
     document.getElementById("dice1").src = rollToDieMap[r1];
     document.getElementById("dice2").src = rollToDieMap[r2];
+
+    if (no_moves_left()) {
+        update_turn();
+        return;
+    }
 
     let dice = document.getElementsByClassName("dice");
     for (let i = 0; i < dice.length; ++i) {
