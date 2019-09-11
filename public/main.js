@@ -3,13 +3,14 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+    let start_piece = ev.currentTarget;
     // there are pieces in jail
     if (document.getElementById(turnMap[turn] + "-jail").children.length > 0) {
-        if (!ev.currentTarget.parentElement.classList.contains("jail")) {
+        if (!start_piece.parentElement.classList.contains("jail")) {
             // invalid move
             return;
         }
-        else if (ev.currentTarget.classList.contains(turnMap[turn])) {
+        else if (start_piece.classList.contains(turnMap[turn])) {
             ev.dataTransfer.setData("text", ev.target.id);
             start_num = (turn ? 25 : 0);
             return;
@@ -17,7 +18,7 @@ function drag(ev) {
     }
 
     // checks you are moving the correct colour
-    if (ev.currentTarget.classList.contains(turnMap[turn])) {
+    if (start_piece.classList.contains(turnMap[turn])) {
         ev.dataTransfer.setData("text", ev.target.id);
         start_num = Number(ev.currentTarget.parentElement.id.replace("point", ""));
     }
@@ -82,29 +83,16 @@ for (let i = 0; i < board_points.length; ++i) {
     board_points[i].addEventListener("dragover", allowDrop);
 }
 
-function spin_dice() {
-    let dices = document.getElementsByClassName('dice');
-    
-    for (let i = 0; i < dices.length; ++i) {
-        dices[i].className += " spinner";
-    }
-
-    setTimeout(function() {
-        document.getElementById("dice1").src = rollToDieMap[rolls[0]];
-        document.getElementById("dice2").src = rollToDieMap[rolls[1]];
-        for (let i = 0; i < dices.length; ++i) {
-            dices[i].classList.remove("spinner");
-        }
-    }, 1000)
-}
-
 function roll(ev) {
     spin_dice();
 
-    let r1 = Math.floor(Math.random() * 6 + 1);
-    let r2 = Math.floor(Math.random() * 6 + 1);
+    // let r1 = Math.floor(Math.random() * 6 + 1);
+    // let r2 = Math.floor(Math.random() * 6 + 1);
+    let r1 = 2;
+    let r2 = 2;
     
-    rolls = (r1 == r2 ? [r1, r1, r1, r1] : [r1, r2])
+    // rolls = (r1 == r2 ? [r1, r1, r1, r1] : [r1, r2]);
+    rolls = [r1, r1];
 
     r1 = Math.floor(Math.random() * 6 + 1);
     r2 = Math.floor(Math.random() * 6 + 1);

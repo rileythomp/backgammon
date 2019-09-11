@@ -21,6 +21,22 @@ let turn = true;
 
 let move_size = 0;
 
+function spin_dice() {
+    let dices = document.getElementsByClassName('dice');
+    
+    for (let i = 0; i < dices.length; ++i) {
+        dices[i].className += " spinner";
+    }
+
+    setTimeout(function() {
+        document.getElementById("dice1").src = rollToDieMap[rolls[0]];
+        document.getElementById("dice2").src = rollToDieMap[rolls[1]];
+        for (let i = 0; i < dices.length; ++i) {
+            dices[i].classList.remove("spinner");
+        }
+    }, 1000)
+}
+
 function update_turn() {
     turn = !turn;
     document.getElementById("turn-message").innerHTML = turnMap[turn] + "'s turn";
@@ -77,6 +93,16 @@ function move_piece(ev) {
         return;
     }
 
+    let start_point = document.getElementById("point" + start_num)
+    if (start_point.children.length < 7) {
+        for (let i = 0; i < start_point.children.length; ++i) {
+            start_point.children[i].style.display = "block";
+        }
+    }
+
+    if (pieces_on_point(target) > 5) {
+        piece.style.display = "none";
+    }
     target.appendChild(piece);
 
     rolls.remove(move_size);

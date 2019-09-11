@@ -9,8 +9,6 @@
   "author": "rileythomp",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "less": "^3.10.3",
-    "nodemon": "^1.19.2"
+    "express": "^4.17.1"
   }
 }
