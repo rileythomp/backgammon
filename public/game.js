@@ -94,9 +94,11 @@ function move_piece(ev) {
     }
 
     let start_point = document.getElementById("point" + start_num)
-    if (start_point.children.length < 7) {
-        for (let i = 0; i < start_point.children.length; ++i) {
-            start_point.children[i].style.display = "block";
+    for (let i = 0; i < start_point.children.length; ++i) {
+        let piece = start_point.children[i];
+        if (piece.style.display == "none") {
+            piece.style.display = "block";
+            break;
         }
     }
 

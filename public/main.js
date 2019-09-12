@@ -24,6 +24,40 @@ function drag(ev) {
     }
 }
 
+function all_pieces_home(turn) {
+    let colour = turnMap[turn];
+    let home_points = document.getElementsByClassName(colour + "-home");
+    let pieces_home = 0;
+    for (let i = 0; i < home_points.length; ++i) {
+        let point = home_points[i];
+        pieces_home += point.querySelectorAll('.' + colour).length;
+    }
+    return pieces_home == 15;
+}
+
+function bearing_off(n) {
+    return n % 25 == 0;
+}
+
+function roll_larger_than_possible(move_size, turn) {
+    for (let i = move_size + 1; i < 7; ++i) {
+        let point = document.getElementById('point' + i);
+        if (point.children.length != 0) {
+            return false;
+        }
+    }
+    for (let i = 0; i < rolls.length; ++i) {
+        if (rolls[i] >= move_size) {
+            return false;
+        }
+    }
+    return all_pieces_home(turn); 
+}
+
+function move_correct_by_roll(move_size) {
+    return rolls.includes(move_size) || roll_larger_than_possible(move_size, turn);
+}
+
 function drop(ev) {
     ev.preventDefault();
 
@@ -38,24 +72,18 @@ function drop(ev) {
 
     move_size = abs(start_num - end_num);
 
-    if (!rolls.includes(move_size) && correct_direction()) {
-        return
+    // handle moving a piece off board when no other option
+
+    if (!move_correct_by_roll(move_size) || !correct_direction()) {
+
     }
 
-    // bearing off
-    if (end_num % 25 == 0) {
-        // validate that all pieces are in home
-        let colour = turnMap[turn];
-        let home_points = document.getElementsByClassName(colour + "-home");
-        let pieces_home = 0;
-        for (let i = 0; i < home_points.length; ++i) {
-            let point = home_points[i];
-            pieces_home += point.querySelectorAll('.' + colour).length;
+    // if (!rolls.includes(move_size) || !correct_direction()) {
+    //     return
+    // }
 
-        }
-        if (pieces_home != 15) {
-            return;
-        }
+    if (bearing_off(end_num) && !all_pieces_home(turn)) {
+        return;
     }
 
     if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
@@ -86,13 +114,10 @@ for (let i = 0; i < board_points.length; ++i) {
 function roll(ev) {
     spin_dice();
 
-    // let r1 = Math.floor(Math.random() * 6 + 1);
-    // let r2 = Math.floor(Math.random() * 6 + 1);
-    let r1 = 2;
-    let r2 = 2;
+    let r1 = Math.floor(Math.random() * 6 + 1);
+    let r2 = Math.floor(Math.random() * 6 + 1);
     
-    // rolls = (r1 == r2 ? [r1, r1, r1, r1] : [r1, r2]);
-    rolls = [r1, r1];
+    rolls = (r1 == r2 ? [r1, r1, r1, r1] : [r1, r2]);
 
     r1 = Math.floor(Math.random() * 6 + 1);
     r2 = Math.floor(Math.random() * 6 + 1);
