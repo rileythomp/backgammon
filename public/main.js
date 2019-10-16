@@ -32,7 +32,8 @@ function all_pieces_home(turn) {
         let point = home_points[i];
         pieces_home += point.querySelectorAll('.' + colour).length;
     }
-    return pieces_home == 15;
+    return true;
+    // return pieces_home == 15;
 }
 
 function bearing_off(n) {
@@ -58,6 +59,31 @@ function move_correct_by_roll(move_size) {
     return rolls.includes(move_size) || roll_larger_than_possible(move_size, turn);
 }
 
+function bearing_off_with_larger_roll(move_size) {
+    console.log(move_size);
+}
+
+function can_move_with_larger_roll(move_size, turn, start_num) {
+    for (let i = 0; i < rolls.length; ++i) {
+        if (rolls[i] <= move_size) {
+            return false;
+        }
+    }
+    console.log(345);
+
+    // now we know all the rolls are bigger than the move size
+    // so check that there isnt a piece farther back
+    let colour = turnMap[turn];
+    let home_points = document.getElementsByClassName(colour + "-home");
+    let pieces_home = 0;
+    for (let i = 0; i < home_points.length; ++i) {
+        let point = home_points[i];
+        pieces_home += point.querySelectorAll('.' + colour).length;
+    }
+    console.log(pieces_home);
+    return true;
+}
+
 function drop(ev) {
     ev.preventDefault();
 
@@ -72,21 +98,38 @@ function drop(ev) {
 
     move_size = abs(start_num - end_num);
 
-    // handle moving a piece off board when no other option
-
-    if (!move_correct_by_roll(move_size) || !correct_direction()) {
-
-    }
-
-    // if (!rolls.includes(move_size) || !correct_direction()) {
-    //     return
+    // if (bearing_off(end_num) && !all_pieces_home(turn)) {
+    //     document.getElementById('error-msg').innerHTML = 'You can\'t go there';
+    //     return;
     // }
 
-    if (bearing_off(end_num) && !all_pieces_home(turn)) {
-        return;
-    }
+    // handle moving a piece off board when no other option
 
-    if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
+    // if (!move_correct_by_roll(move_size) || !correct_direction()) {
+    //     document.getElementById('error-msg').innerHTML = 'You can\'t go there';
+    //     return;
+    // }
+
+    // to move
+    //      move size == rollsize
+    //      empty point
+    //      you own the point
+    //      only one opponent on the point
+
+    if (bearing_off(end_num)) {
+        // all pieces need to be home
+        // exact distance move
+        // if a roll is larger than what you can move, you can move the farthest piece
+        if (all_pieces_home(turn)) {
+            if (move_correct_by_roll(move_size) && correct_direction()) {
+                move_piece(ev);
+            }
+            else if (correct_direction() && can_move_with_larger_roll(move_size, turn, start_num)) {
+                console.log(123);
+            }
+        }
+    }
+    else if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
         move_piece(ev);
         let hit_piece = end_point.firstElementChild
         end_point.removeChild(hit_piece);
@@ -97,6 +140,9 @@ function drop(ev) {
     }
     else if (point_has_same_piece(end_point)) {
         move_piece(ev);
+    }
+    else {
+        document.getElementById('error-msg').innerHTML = 'You can\'t go there';
     }
 }
 

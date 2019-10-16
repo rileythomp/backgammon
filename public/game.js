@@ -106,8 +106,15 @@ function move_piece(ev) {
         piece.style.display = "none";
     }
     target.appendChild(piece);
+    document.getElementById('error-msg').innerHTML = '';
 
-    rolls.remove(move_size);
+
+    if (rolls.includes(move_size)) {
+        rolls.remove(move_size);
+    }
+    else {
+        rolls.remove_largest();
+    }
 
     if (rolls.length == 0 || no_moves_left()) {
         update_turn();
