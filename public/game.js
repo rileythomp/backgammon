@@ -94,6 +94,11 @@ function move_piece(ev) {
     }
 
     let start_point = document.getElementById("point" + start_num)
+    if (start_num == 25) {
+        start_point = document.getElementById('blue-jail');
+    } else if (start_num == 0) {
+        start_point = document.getElementById('red-jail');
+    }
     for (let i = 0; i < start_point.children.length; ++i) {
         let piece = start_point.children[i];
         if (piece.style.display == "none") {

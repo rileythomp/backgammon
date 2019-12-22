@@ -60,7 +60,7 @@ function move_correct_by_roll(move_size) {
 }
 
 function bearing_off_with_larger_roll(move_size) {
-    console.log(move_size);
+    alert("inside bearing off with larger roll move is size", move_size);
 }
 
 function can_move_with_larger_roll(move_size, turn, start_num) {
@@ -69,7 +69,6 @@ function can_move_with_larger_roll(move_size, turn, start_num) {
             return false;
         }
     }
-    console.log(345);
 
     // now we know all the rolls are bigger than the move size
     // so check that there isnt a piece farther back
@@ -78,10 +77,15 @@ function can_move_with_larger_roll(move_size, turn, start_num) {
     let pieces_home = 0;
     for (let i = 0; i < home_points.length; ++i) {
         let point = home_points[i];
-        pieces_home += point.querySelectorAll('.' + colour).length;
+        let points_on_this_piece = point.querySelectorAll('.' + colour).length;
+        if (6-i == start_num) {
+            if (points_on_this_piece > 0 && pieces_home < 1) {
+                return true
+            }
+        }
+        pieces_home += points_on_this_piece;
     }
-    console.log(pieces_home);
-    return true;
+    return false;
 }
 
 function drop(ev) {
@@ -116,7 +120,10 @@ function drop(ev) {
     //      you own the point
     //      only one opponent on the point
 
-    if (bearing_off(end_num)) {
+    if (rolls.length == 0) {
+        document.getElementById('error-msg').innerHTML = 'You need to roll';
+    }
+    else if (bearing_off(end_num)) {
         // all pieces need to be home
         // exact distance move
         // if a roll is larger than what you can move, you can move the farthest piece
@@ -125,24 +132,32 @@ function drop(ev) {
                 move_piece(ev);
             }
             else if (correct_direction() && can_move_with_larger_roll(move_size, turn, start_num)) {
-                console.log(123);
+                move_piece(ev);
+            }
+            else {
+                document.getElementById('error-msg').innerHTML = 'You can\'t go there';
             }
         }
     }
-    else if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
-        move_piece(ev);
-        let hit_piece = end_point.firstElementChild
-        end_point.removeChild(hit_piece);
-        document.getElementById(hit_piece.id.replace(/\d+/g, '') + "-jail").appendChild(hit_piece);
-    }
-    else if (pieces_on_point(end_point) == 0) {
-        move_piece(ev);
-    }
-    else if (point_has_same_piece(end_point)) {
-        move_piece(ev);
+    else if (rolls.includes(move_size)) {
+        if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
+            move_piece(ev);
+            let hit_piece = end_point.firstElementChild
+            end_point.removeChild(hit_piece);
+            document.getElementById(hit_piece.id.replace(/\d+/g, '') + "-jail").appendChild(hit_piece);
+        }
+        else if (pieces_on_point(end_point) == 0) {
+            move_piece(ev);
+        }
+        else if (point_has_same_piece(end_point)) {
+            move_piece(ev);
+        }
+        else {
+            document.getElementById('error-msg').innerHTML = 'You can\'t go there';
+        }
     }
     else {
-        document.getElementById('error-msg').innerHTML = 'You can\'t go there';
+        document.getElementById('error-msg').innerHTML = 'roll size mismatch';
     }
 }
 
