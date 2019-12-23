@@ -78,7 +78,7 @@ function can_move_with_larger_roll(move_size, turn, start_num) {
     for (let i = 0; i < home_points.length; ++i) {
         let point = home_points[i];
         let points_on_this_piece = point.querySelectorAll('.' + colour).length;
-        if (6-i == start_num) {
+        if ((6-i == start_num && turn) || (19+i == start_num && !turn)) {
             if (points_on_this_piece > 0 && pieces_home < 1) {
                 return true
             }
@@ -101,18 +101,6 @@ function drop(ev) {
     }
 
     move_size = abs(start_num - end_num);
-
-    // if (bearing_off(end_num) && !all_pieces_home(turn)) {
-    //     document.getElementById('error-msg').innerHTML = 'You can\'t go there';
-    //     return;
-    // }
-
-    // handle moving a piece off board when no other option
-
-    // if (!move_correct_by_roll(move_size) || !correct_direction()) {
-    //     document.getElementById('error-msg').innerHTML = 'You can\'t go there';
-    //     return;
-    // }
 
     // to move
     //      move size == rollsize
@@ -139,7 +127,7 @@ function drop(ev) {
             }
         }
     }
-    else if (rolls.includes(move_size)) {
+    else if (rolls.includes(move_size) && correct_direction()) {
         if (pieces_on_point(end_point) == 1 && point_has_different_piece(end_point)) {
             move_piece(ev);
             let hit_piece = end_point.firstElementChild

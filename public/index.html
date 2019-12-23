@@ -10,123 +10,20 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Poppins|Rubik|Lato|Raleway" type="text/css">
     <link rel="stylesheet/less" type="text/css" href="styles.less" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="less.min.js" ></script>
+    <style>
+        body {
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
   </head>
   <body>
-    <h1>backgammon</h1>
-    <div class="grid-container">
-        <div id="point13" class="grid-item top point">
-          <img class="blue piece" id="blue1" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue2" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue3" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue4" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue5" src="assets/blue_piece.png" draggable="true">
-        </div>
-        <div id="point14" class="grid-item top point">
-            
-        </div>
-        <div id="point15" class="grid-item top point">
-            
-        </div>
-        <div id="point16" class="grid-item top point">
-            
-        </div>
-        <div id="point17" class="grid-item top point">
-          <img class="red piece" id="red16" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red17" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red18" src="assets/red_piece.png" draggable="true">
-        </div>
-        <div id="point18" class="grid-item top point">
-            
-        </div>
-        <div id="blue-jail" class="grid-item off-board jail">
-          
-        </div>
-        <div id="point19" class="grid-item top point red-home">
-          <img class="red piece" id="red19" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red20" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red21" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red22" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red23" src="assets/red_piece.png" draggable="true">
-        </div>
-        <div id="point20" class="grid-item top point red-home">
-            
-        </div>
-        <div id="point21" class="grid-item top point red-home">
-            
-        </div>
-        <div id="point22" class="grid-item top point red-home">
-            
-        </div>
-        <div id="point23" class="grid-item top point red-home">
-            
-        </div>
-        <div id="point24" class="grid-item top point red-home">
-          <img class="blue piece" id="blue6" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue7" src="assets/blue_piece.png" draggable="true">
-        </div>
-        <div id="red-bear" class="grid-item off-board bear point red-home">
-            
-        </div>
-        <div id="point12" class="grid-item bottom point">
-          <img class="red piece" id="red26" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red27" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red28" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red29" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red30" src="assets/red_piece.png" draggable="true">
-        </div>
-        <div id="point11" class="grid-item bottom point">
-            
-        </div>
-        <div id="point10" class="grid-item bottom point">
-        </div>
-        <div id="point9" class="grid-item bottom point">
-            
-        </div>
-        <div id="point8" class="grid-item bottom point">
-          <img class="blue piece" id="blue13" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue14" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue15" src="assets/blue_piece.png" draggable="true">
-        </div>
-        <div id="point7" class="grid-item bottom point">
-            
-        </div>
-        <div id="red-jail" class="grid-item off-board jail">
-            
-        </div>
-        <div id="point6" class="grid-item bottom point blue-home">
-          <img class="blue piece" id="blue8" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue9" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue10" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue11" src="assets/blue_piece.png" draggable="true">
-          <img class="blue piece" id="blue12" src="assets/blue_piece.png" draggable="true">
-        </div>
-        <div id="point5" class="grid-item bottom point blue-home">
-        </div>
-        <div id="point4" class="grid-item bottom point blue-home">
-        </div>
-        <div id="point3" class="grid-item bottom point blue-home">
-        </div>
-        <div id="point2" class="grid-item bottom point blue-home">
-        </div>
-        <div id="point1" class="grid-item bottom point blue-home">
-          <img class="red piece" id="red24" src="assets/red_piece.png" draggable="true">
-          <img class="red piece" id="red25" src="assets/red_piece.png" draggable="true">
-        </div>
-        <div id="blue-bear" class="grid-item off-board bear point blue-home">
-            
-        </div>    
-    </div>
-    <div id="dice-display">
-      <div id="dice-wrapper">
-          <img id="dice1" class="dice" src="assets/dice1.png" alt="">
-          <img id="dice2" class="dice" src="assets/dice2.png" alt="">
-      </div>
-      <p id="turn-message">Blue's turn</p>
-      <p id='error-msg'></p>
-    </div>
+    <h1>Backgammon</h1>
+    <a href="backgammon.html">Play</a>
+    <a id='github' target='blank' href='https://github.com/rileythomp/backgammon'>
+        <i class='fa fa-github'></i>
+    </a>
   </body>
-  <script src="helpers.js"></script>
-  <script src="game.js"></script>
-  <script src="main.js"></script>
 </html>

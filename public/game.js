@@ -8,8 +8,8 @@ let rollToDieMap = {
 }
 
 let turnMap = {
-    true: "blue",
-    false: "red"
+    true: "Green",
+    false: "Purple"
 }
 
 let rolls = [];
@@ -39,6 +39,7 @@ function spin_dice() {
 
 function update_turn() {
     turn = !turn;
+    rolls = [];
     document.getElementById("turn-message").innerHTML = turnMap[turn] + "'s turn";
     let dice = document.getElementsByClassName("dice");
     for (let i = 0; i < dice.length; ++i) {
@@ -95,7 +96,7 @@ function move_piece(ev) {
 
     let start_point = document.getElementById("point" + start_num)
     if (start_num == 25) {
-        start_point = document.getElementById('blue-jail');
+        start_point = document.getElementById('Green-jail');
     } else if (start_num == 0) {
         start_point = document.getElementById('red-jail');
     }
