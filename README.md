@@ -16,4 +16,4 @@ To run locally:
 
 ```$ npm start```
 
-Then go to localhost:3030 in your browser
+Then go to localhost:3000 in your browser
