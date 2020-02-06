@@ -2,9 +2,9 @@
 
 https://back-gammon.herokuapp.com
 
-![backgammon](backgammon.png)
-
 A backgammon game
+
+![backgammon](backgammon.png)
 
 To run locally:
 
